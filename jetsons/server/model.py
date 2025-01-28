@@ -4,7 +4,7 @@ from torchvision import transforms
 from torchvision import models
 
 model_mapping = {
-    "d16e72acdf64baf2f9b8e2276c927535e9278d5cd3202d2eef943c1d0a60d84d-model": "googlenet",
+    "0d0172ce3cc25da4697f133e19887296883e696d2604850080e7eaf9c1188ae3-model": "googlenet",
     "e0e46c4c246a0a9d88c9cbbbb9a4390600abe071c4d532a4b28e7cb8e20b08d6-model": "resnet152",
     "665fdecddef3647b5882051d4b852b6ec075d4530d548a954dbb6d5e69286c5d-model": "shufflenet_v2_x0_5",
     "86c48c6b1eca331e9c745e5d036480f4706a83b7c08ecc5cbf44a4fa12d19237-model": "densenet201",

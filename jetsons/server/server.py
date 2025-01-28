@@ -18,9 +18,9 @@ load_dotenv(".env")
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = './uploads'
-SERVER_ID = os.getenv('SERVER_ID', 'd2iedgeai2')
+SERVER_ID = os.getenv('SERVER_ID', 'd2iedgeai3')
 
-KAFKA_BROKER = os.getenv('CKN_KAFKA_BROKER', '149.165.170.250:9092')
+KAFKA_BROKER = os.getenv('CKN_KAFKA_BROKER', '149.165.175.212:9092')
 
 RAW_EVENT_TOPIC = os.getenv('RAW_EVENT_TOPIC', 'ckn_raw')
 START_DEPLOYMENT_TOPIC = os.getenv('START_DEPLOYMENT_TOPIC', 'ckn_start_deployment')

@@ -11,10 +11,10 @@ load_dotenv(".env")
 This generates the REST requests along with the images to be sent to the EDGE REST interfaces. 
 """
 
-SERVER_ADDRESS = "http://10.20.72.45:8080"
+SERVER_ADDRESS = "http://10.21.188.157:8080"
 URL = f"{SERVER_ADDRESS}/predict"
 SIGNAL_URL = f"{SERVER_ADDRESS}/changetimestep"
-DEVICE_NAME = "d2iedgeai2"
+DEVICE_NAME = "d2iedgeai3"
 DATA_FILE = 'data/1_min_window_low_delay_high_rps.csv'
 IMAGE_DIRECTORY = './data/images'
 IMAGES = []
