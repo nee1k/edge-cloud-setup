@@ -149,15 +149,11 @@ def process_w_qoe(file, data):
         deployment_id = str(uuid.uuid4())  # Generate new deployment_id
         last_model_id = current_model_id  # Update last_model_id
 
-    # Extract public IP if available, otherwise use request IP
-    client_public_ip = data.get('public_ip', request.remote_addr)
-
     payload = {'timestamp': total_start_time, 'server_id': SERVER_ID, 'model_id': current_model_id,
                'deployment_id': deployment_id, 'service_id': data['service_id'], 'device_id': device_id,
                'ground_truth': data['ground_truth'], 'req_delay': req_delay, 'req_acc': req_acc,
                'prediction': prediction, 'compute_time': compute_time, 'probability': probability,
-               'accuracy': accuracy, 'total_qoe': qoe, 'accuracy_qoe': acc_qoe, 'delay_qoe': delay_qoe,
-               'client_ip': client_public_ip}
+               'accuracy': accuracy, 'total_qoe': qoe, 'accuracy_qoe': acc_qoe, 'delay_qoe': delay_qoe}
 
     schema = {
         "type": "struct",
@@ -177,8 +173,7 @@ def process_w_qoe(file, data):
             {"type": "int32", "optional": True, "field": "accuracy"},
             {"type": "float", "optional": True, "field": "total_qoe"},
             {"type": "float", "optional": True, "field": "accuracy_qoe"},
-            {"type": "float", "optional": True, "field": "delay_qoe"},
-            {"type": "string", "optional": True, "field": "client_ip"}
+            {"type": "float", "optional": True, "field": "delay_qoe"}
         ],
         "optional": False,
         "name": "d2i"
