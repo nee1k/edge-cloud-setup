@@ -12,7 +12,7 @@
     "key.converter.schemas.enable": false,
     "value.converter": "org.apache.kafka.connect.json.JsonConverter",
     "value.converter.schemas.enable": false,
-    "neo4j.server.uri": "bolt://149.165.175.36:7688",
+    "neo4j.server.uri": "neo4j:7688",
     "neo4j.authentication.basic.username": "neo4j",
     "neo4j.authentication.basic.password": "PWD_HERE",
     "neo4j.topic.cypher.ckn_agg_deployment": "
@@ -25,9 +25,6 @@
             deployment.avg_total_qoe = event.avg_total_qoe,
             deployment.avg_accuracy_qoe = event.avg_accuracy_qoe,
             deployment.avg_delay_qoe = event.avg_delay_qoe,
-            deployment.avg_cpu_power = event.avg_cpu_power,
-            deployment.avg_gpu_power = event.avg_gpu_power,
-            deployment.avg_total_power = event.avg_total_power,
             deployment.total_requests = event.total_requests
     "
   }

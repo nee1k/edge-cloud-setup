@@ -8,6 +8,8 @@ services:
     ports:
       - "7474:7474"
       - "7687:7687"
+    volumes:
+      - neo4j-data:/data
     environment:
       - NEO4J_AUTH=neo4j/PWD_HERE
       - NEO4J_apoc_export_file_enabled=true
@@ -82,7 +84,7 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://149.165.172.217:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://10.21.206.226:9092,PLAINTEXT_HOST://localhost:29092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -141,7 +143,7 @@ services:
 # Define Networks and Volumes
 networks:
   ckn-network:
-    external: True
 
 volumes:
   postgres-data:
+  neo4j-data:

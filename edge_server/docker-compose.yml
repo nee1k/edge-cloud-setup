@@ -1,0 +1,10 @@
+services:
+  ckn-daemon:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ckn-daemon
+    ports:
+      - "5002:5002"
+    environment:
+      - CKN_KAFKA_BROKER=10.21.206.226:9092

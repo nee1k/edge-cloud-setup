@@ -12,7 +12,7 @@
     "key.converter.schemas.enable": false,
     "value.converter": "org.apache.kafka.connect.json.JsonConverter",
     "value.converter.schemas.enable": false,
-    "neo4j.server.uri": "bolt://149.165.175.36:7688",
+    "neo4j.server.uri": "bolt://neo4j:7687",
     "neo4j.authentication.basic.username": "neo4j",
     "neo4j.authentication.basic.password": "PWD_HERE",
     "neo4j.topic.cypher.ckn_start_deployment": "
@@ -24,10 +24,10 @@
         ON CREATE SET
           depl.start_time = event.start_time,
           depl.status = event.status
-        MERGE (depl)-[:deployedIn]->(server)
-        MERGE (depl)-[:used]->(model)
-        MERGE (depl)-[:requestedBy]->(device)
-        MERGE (model)-[:modelOf]->(service)
+        MERGE (depl)-[:deployed_in]->(server)
+        MERGE (model)-[:has_deployment]->(depl)
+        MERGE (depl)-[:requested_by]->(device)
+        MERGE (model)-[:model_of]->(service)
     "
   }
 }

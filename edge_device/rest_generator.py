@@ -11,29 +11,27 @@ load_dotenv(".env")
 This generates the REST requests along with the images to be sent to the EDGE REST interfaces. 
 """
 
-SERVER_ADDRESS = "http://10.21.188.157:8080"
+SERVER_ADDRESS = os.getenv("SERVER_ADDRESS")
 URL = f"{SERVER_ADDRESS}/predict"
 SIGNAL_URL = f"{SERVER_ADDRESS}/changetimestep"
-DEVICE_NAME = "d2iedgeai3"
+DEVICE_NAME = os.getenv("DEVICE_NAME")
 DATA_FILE = 'data/1_min_window_low_delay_high_rps.csv'
 IMAGE_DIRECTORY = './data/images'
 IMAGES = []
 
 
-def get_images_in_order(dir_name, device_name):
+def get_images_in_order(dir_name):
     """
     Returns the images for the device in order
     Returns:
 
     """
-    device_images_path = os.path.join(dir_name, device_name)
-    # sort to maintain the order
-    all_images = np.sort(os.listdir(device_images_path))
+    all_images = np.sort(os.listdir(dir_name))
     # get the absolute path for each image
     image_paths = []
     final_images = []
     for image in all_images:
-        image_path = os.path.join(device_images_path, image)
+        image_path = os.path.join(dir_name, image)
         if not image.startswith('.') and os.path.isfile(image_path):
             image_paths.append(image_path)
             final_images.append(image)
@@ -114,7 +112,7 @@ def main():
     split_data = split_data_by_timestamp(device_data)
 
     # get the input images
-    images_raspi_1, image_paths = get_images_in_order(IMAGE_DIRECTORY, DEVICE_NAME)
+    images_raspi_1, image_paths = get_images_in_order(IMAGE_DIRECTORY)
     max_iterations = 1
 
     for i in range(max_iterations):

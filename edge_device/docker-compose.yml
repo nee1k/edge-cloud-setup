@@ -1,0 +1,8 @@
+services:
+  device:
+    build:
+      context: .
+    container_name: device
+    environment:
+      - SERVER_ADDRESS=http://10.21.206.226:5002
+      - SERVER_ID=neelk_macbook
