@@ -69,8 +69,8 @@ def get_json_requests(dataset):
   return np.asarray(json_data)
 
 
-def send_request(filename, file_location, payload):
-    start_time = datetime.datetime.now().microsecond/1000
+def send_request(filename, file_location, payload, URL):
+    start_time = datetime.datetime.now().microsecond / 1000
     files = [
         ('file',
          (filename, open(file_location, 'rb'), 'image/jpeg'))
@@ -78,12 +78,12 @@ def send_request(filename, file_location, payload):
     headers = {}
 
     response = requests.request("POST", URL, headers=headers, data=payload, files=files)
-    total_time = datetime.datetime.now().microsecond/1000 - start_time
+    total_time = datetime.datetime.now().microsecond / 1000 - start_time
 
     return response, total_time
 
 
-def signal_split_end():
+def signal_split_end(SIGNAL_URL):
     headers = {}
 
     response = requests.request("GET", SIGNAL_URL, headers=headers)
@@ -107,9 +107,14 @@ def split_data_by_timestamp(data):
     return split_data
 
 
-def main():
-    device_data = parse_data_file(DATA_FILE)
-    split_data = split_data_by_timestamp(device_data)
+def main(SERVER_ADDRESS):
+    URL = f"http://{SERVER_ADDRESS}/predict"
+    SIGNAL_URL = f"http://{SERVER_ADDRESS}/changetimestep"
+    # DATA_FILE = 'data/1_min_window_low_delay_high_rps.csv'
+    IMAGE_DIRECTORY = './data/images'
+
+    # device_data = parse_data_file(DATA_FILE)
+    # split_data = split_data_by_timestamp(device_data)
 
     # get the input images
     images_raspi_1, image_paths = get_images_in_order(IMAGE_DIRECTORY)
@@ -123,19 +128,19 @@ def main():
             json_requests = get_json_requests(np.asarray(split_data[split_idx]))
             requests_count = json_requests.shape[0]
 
-            if requests_count < 10:
+            if requests_count < 50:
                 continue
-            requests_count = 10
+            requests_count = 50
 
             # send each request along wih an image from the IMAGENET data
             for k in range(requests_count):
                 filename, file_location, payload = images_raspi_1[k], image_paths[k], json_requests[k]
 
                 payload['ground_truth'] = filename.split('.')[0]
-                response, r_time = send_request(filename, file_location, payload)
+                response, r_time = send_request(filename, file_location, payload, URL)
 
             print("Signaling split end after {} requests!".format(requests_count))
-            signal_split_end()
+            signal_split_end(SIGNAL_URL)
             time.sleep(5)
             total_splits += 1
 
@@ -143,5 +148,13 @@ def main():
                 print("{0} rounds sent!".format(i + 1))
                 break
 
+
 if __name__ == "__main__":
-    main()
+    for server_address in [
+        "149.165.172.170:5002",
+        "149.165.154.90:5002",
+        "149.165.169.57:5002",
+        "149.165.168.114:5002",
+        "149.165.174.85:5002"
+    ]:
+        main(server_address)
