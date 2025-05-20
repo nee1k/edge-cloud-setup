@@ -132,8 +132,8 @@ def process_w_qoe(file, data):
     total_start_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
     filename = save_file(file)
 
-    preprocessed_input = pre_process(filename)
     compute_start_time = time.time()
+    preprocessed_input = pre_process(filename)
     prediction, probability = predict(preprocessed_input)
     compute_end_time = time.time()
 
