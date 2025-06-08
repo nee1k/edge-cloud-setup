@@ -15,9 +15,9 @@ load_dotenv(".env")
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = './uploads'
-SERVER_ID = os.getenv('SERVER_ID')
+SERVER_ID = os.getenv('SERVER_ID', 'ckn_edge_server')
 
-KAFKA_BROKER = os.getenv('CKN_KAFKA_BROKER')
+KAFKA_BROKER = os.getenv('CKN_KAFKA_BROKER', 'localhost:9092')
 
 RAW_EVENT_TOPIC = os.getenv('RAW_EVENT_TOPIC', 'ckn_raw')
 START_DEPLOYMENT_TOPIC = os.getenv('START_DEPLOYMENT_TOPIC', 'ckn_start_deployment')
@@ -186,4 +186,4 @@ def process_w_qoe(file, data):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5002, debug=False)
+    app.run(host="0.0.0.0", port=5003, debug=False)
